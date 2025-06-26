@@ -18,13 +18,14 @@ h1 {
 }
 
 input[type="text"] {
-  width: 60px;
-  height: 60px;
+  width: 60px !important;
+  height: 60px !important;
   text-align: center;
   font-size: 2rem;
   margin: 0 0.3rem;
   border: 2px solid #ccc;
   border-radius: 8px;
+  display: inline-block !important;
 }
 
 button {
@@ -45,18 +46,18 @@ button:disabled {
 }
 
 .word-row {
-  display: flex;
+  display: flex !important;
   justify-content: center;
   margin-bottom: 0.6rem;
 }
 
 .letter-box {
-  width: 60px;
-  height: 60px;
+  width: 60px !important;
+  height: 60px !important;
   font-weight: bold;
   text-transform: uppercase;
   border-radius: 6px;
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   margin: 0 4px;
@@ -66,15 +67,15 @@ button:disabled {
 }
 
 .bg-green-400 {
-  background-color: #22c55e; /* Tailwind green-500 */
+  background-color: #22c55e !important; /* Tailwind green-500 */
 }
 
 .bg-yellow-300 {
-  background-color: #eab308; /* Tailwind yellow-400 */
+  background-color: #eab308 !important; /* Tailwind yellow-400 */
 }
 
 .bg-gray-300 {
-  background-color: #9ca3af; /* Tailwind gray-400 */
+  background-color: #9ca3af !important; /* Tailwind gray-400 */
 }
 
 .result-box {
