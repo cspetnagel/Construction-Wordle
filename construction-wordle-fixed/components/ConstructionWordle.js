@@ -1,11 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button"; // Assuming this exists; otherwise replace or remove
-
-// Add local Card and CardContent components
-const Card = ({ children }) => (
-  <div className="bg-white shadow-md rounded p-4 mt-4">{children}</div>
-);
-const CardContent = ({ children }) => <div>{children}</div>;
 
 const constructionWords = [
   "crane", "steel", "rebar", "brick", "drill", "mixer", "plumb", "level", "track",
@@ -28,7 +21,7 @@ export default function ConstructionWordle() {
 
   useEffect(() => {
     if (!gameOver) {
-      const firstEmpty = letterInputs.findIndex(l => l === "");
+      const firstEmpty = letterInputs.findIndex((l) => l === "");
       if (firstEmpty !== -1 && inputRefs.current[firstEmpty]) {
         inputRefs.current[firstEmpty].focus();
       }
@@ -111,7 +104,7 @@ export default function ConstructionWordle() {
                 type="text"
                 maxLength={1}
                 value={letter}
-                ref={el => inputRefs.current[index] = el}
+                ref={(el) => (inputRefs.current[index] = el)}
                 onChange={(e) => handleInputChange(e.target.value, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 className="w-10 h-10 text-center text-xl border rounded uppercase"
@@ -120,9 +113,24 @@ export default function ConstructionWordle() {
           </div>
         )}
       </div>
-      <Button onClick={handleGuess} className="mt-2" disabled={gameOver}>Submit</Button>
-      {result && <Card><CardContent>{result}</CardContent></Card>}
-      {gameOver && <Button onClick={handleRestart} className="mt-4">Play Again</Button>}
+      <button
+        onClick={handleGuess}
+        disabled={gameOver}
+        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
+      >
+        Submit
+      </button>
+      {result && (
+        <div className="mt-4 p-4 border rounded bg-white shadow">{result}</div>
+      )}
+      {gameOver && (
+        <button
+          onClick={handleRestart}
+          className="mt-4 px-4 py-2 bg-green-600 text-white rounded"
+        >
+          Play Again
+        </button>
+      )}
     </div>
   );
 }
