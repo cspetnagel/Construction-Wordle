@@ -125,7 +125,7 @@ export default function ConstructionWordle() {
             <>
               <div className="loss-message">The house always wins — you owe Cori 5 dollars.</div>
               <a
-                href="https://venmo.com/"
+                href="https://venmo.com/cori-spetnagel"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="venmo-button"
