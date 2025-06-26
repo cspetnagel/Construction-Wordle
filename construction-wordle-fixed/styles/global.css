@@ -1,113 +1,147 @@
-body {
-  font-family: sans-serif;
-  background: #f0f0f0;
-  padding: 2rem;
-  text-align: center;
-}
+import React, { useState, useRef, useEffect } from "react";
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+const constructionWords = [
+  "crane", "steel", "rebar", "brick", "drill", "mixer", "plumb", "level", "track",
+  "tools", "joint", "plane", "screw", "floor", "paint", "lamps", "tiles", "hooks", "cable",
+  "panel", "clamp", "sawer", "brads", "bolts", "wires", "shear", "jacks", "plugs", "vents",
+  "laser", "piles", "posts", "ridge", "chalk", "brace", "cover", "slabs", "stake", "grout"
+];
 
-h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-}
+const getRandomWord = () => {
+  return constructionWords[Math.floor(Math.random() * constructionWords.length)].toLowerCase();
+};
 
-input[type="text"] {
-  width: 60px !important;
-  height: 60px !important;
-  text-align: center;
-  font-size: 2rem;
-  margin: 0 0.3rem;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  display: inline-block !important;
-}
+export default function ConstructionWordle() {
+  const [targetWord, setTargetWord] = useState(getRandomWord());
+  const [letterInputs, setLetterInputs] = useState(["", "", "", "", ""]);
+  const [guesses, setGuesses] = useState([]);
+  const [result, setResult] = useState("");
+  const [gameOver, setGameOver] = useState(false);
+  const inputRefs = useRef([]);
 
-button {
-  margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  background: #3b82f6;
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-}
+  useEffect(() => {
+    if (!gameOver) {
+      const firstEmpty = letterInputs.findIndex((l) => l === "");
+      if (firstEmpty !== -1 && inputRefs.current[firstEmpty]) {
+        inputRefs.current[firstEmpty].focus();
+      }
+    }
+  }, [letterInputs, gameOver]);
 
-button.venmo-button {
-  margin-top: 0.75rem;
-  background: #3d95ce;
-  padding: 0.6rem 1.4rem;
-  font-size: 1rem;
-  text-decoration: none;
-  border-radius: 6px;
-  color: white;
-  display: inline-block;
-}
+  const handleInputChange = (value, index) => {
+    const newInputs = [...letterInputs];
+    const char = value.slice(-1).toUpperCase();
+    newInputs[index] = char;
+    setLetterInputs(newInputs);
+    if (char && index < 4) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
 
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !letterInputs[index] && index > 0) {
+      const newInputs = [...letterInputs];
+      newInputs[index - 1] = "";
+      setLetterInputs(newInputs);
+      inputRefs.current[index - 1]?.focus();
+    } else if (e.key === "Enter") {
+      handleGuess();
+    }
+  };
 
-.word-row {
-  display: flex !important;
-  justify-content: center;
-  margin-bottom: 0.6rem;
-}
+  const handleGuess = () => {
+    const guess = letterInputs.join("").toLowerCase();
+    if (guess.length !== 5 || gameOver) return;
+    const newGuesses = [...guesses, guess];
+    setGuesses(newGuesses);
 
-.letter-box {
-  width: 60px !important;
-  height: 60px !important;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-radius: 6px;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  margin: 0 4px;
-  font-size: 2rem;
-  color: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+    if (guess === targetWord) {
+      setResult("Correct! You've guessed the word.");
+      setGameOver(true);
+    } else if (newGuesses.length === 6) {
+      setResult(`Out of attempts! The word was: ${targetWord}`);
+      setGameOver(true);
+    }
 
-.bg-green-400 {
-  background-color: #22c55e !important;
-}
+    setLetterInputs(["", "", "", "", ""]);
+  };
 
-.bg-yellow-300 {
-  background-color: #eab308 !important;
-}
+  const handleRestart = () => {
+    setTargetWord(getRandomWord());
+    setLetterInputs(["", "", "", "", ""]);
+    setGuesses([]);
+    setResult("");
+    setGameOver(false);
+  };
 
-.bg-gray-300 {
-  background-color: #9ca3af !important;
-}
+  const getLetterColor = (letter, index) => {
+    if (letter === targetWord[index]) return "bg-green-400";
+    if (targetWord.includes(letter)) return "bg-yellow-300";
+    return "bg-gray-300";
+  };
 
-.result-box {
-  background: white;
-  border: 1px solid #ddd;
-  padding: 1.5rem;
-  margin: 2rem auto 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  text-align: center;
-  max-width: 400px;
-}
+  return (
+    <div>
+      <h1>Construction Wordle 🏗️</h1>
+      <div className="space-y-2 mt-4">
+        {guesses.map((g, i) => (
+          <div key={i} className="word-row">
+            {g.split("").map((letter, j) => (
+              <div
+                key={j}
+                className={`letter-box ${getLetterColor(letter, j)}`}
+              >
+                {letter.toUpperCase()}
+              </div>
+            ))}
+          </div>
+        ))}
 
-.result-box.loss .loss-message {
-  margin-top: 0.5rem;
-  font-size: 1rem;
-  color: #555;
+        {!gameOver && guesses.length < 6 && (
+          <div className="word-row">
+            {letterInputs.map((letter, index) => (
+              <input
+                key={index}
+                type="text"
+                maxLength={1}
+                value={letter}
+                ref={(el) => (inputRefs.current[index] = el)}
+                onChange={(e) => handleInputChange(e.target.value, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <button onClick={handleGuess} disabled={gameOver}>
+        Submit
+      </button>
+
+      {gameOver && (
+        <div className={`result-box ${result.includes("Out of attempts") ? "loss" : ""}`}>
+          <div>{result}</div>
+          {result.includes("Out of attempts") && (
+            <>
+              <div className="loss-message">The house always wins — you owe Cori 5 dollars.</div>
+              <a
+                href="https://venmo.com/cori-spetnagel"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="venmo-button"
+              >
+                Pay Now
+              </a>
+            </>
+          )}
+        </div>
+      )}
+
+      {gameOver && (
+        <button onClick={handleRestart} style={{ marginTop: "1rem" }}>
+          Play Again
+        </button>
+      )}
+    </div>
+  );
 }
