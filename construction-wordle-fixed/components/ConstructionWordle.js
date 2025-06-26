@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button"; // Assuming this exists; otherwise replace or remove
+
+// Add local Card and CardContent components
+const Card = ({ children }) => (
+  <div className="bg-white shadow-md rounded p-4 mt-4">{children}</div>
+);
+const CardContent = ({ children }) => <div>{children}</div>;
 
 const constructionWords = [
   "crane", "steel", "rebar", "brick", "drill", "mixer", "plumb", "level", "track",
@@ -116,7 +121,7 @@ export default function ConstructionWordle() {
         )}
       </div>
       <Button onClick={handleGuess} className="mt-2" disabled={gameOver}>Submit</Button>
-      {result && <Card className="mt-4"><CardContent className="p-4">{result}</CardContent></Card>}
+      {result && <Card><CardContent>{result}</CardContent></Card>}
       {gameOver && <Button onClick={handleRestart} className="mt-4">Play Again</Button>}
     </div>
   );
