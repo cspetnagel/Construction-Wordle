@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 
 const constructionWords = [
   "crane", "steel", "rebar", "brick", "drill", "mixer", "plumb", "level", "track",
-  "tools", "joint", "plane", "screw", "floor", "paint", "lamps", "tiles", "hooks", "cable",
-  "panel", "clamp", "sawer", "brads", "bolts", "wires", "shear", "jacks", "plugs", "vents",
-  "laser", "piles", "posts", "ridge", "chalk", "brace", "cover", "slabs", "stake", "grout"
+  "tools", "joint", "plane", "screw", "floor", "paint", "walls", "tiles", "hooks", "cable",
+  "panel", "clamp", "build", "brent", "bolts", "wires", "shear", "jacks", "plugs", "vents",
+  "joint", "piles", "posts", "truss", "danny", "chalk", "brace", "cover", "slabs", "stake", "grout"
 ];
 
 const getRandomWord = () => {
@@ -81,23 +81,24 @@ export default function ConstructionWordle() {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto text-center">
-      <h1 className="text-2xl font-bold mb-4">Construction Wordle</h1>
+    <div>
+      <h1>Construction Wordle</h1>
       <div className="space-y-2 mt-4">
         {guesses.map((g, i) => (
-          <div key={i} className="flex justify-center space-x-1">
+          <div key={i} className="word-row">
             {g.split("").map((letter, j) => (
               <div
                 key={j}
-                className={`w-10 h-10 flex items-center justify-center font-bold text-white rounded ${getLetterColor(letter, j)}`}
+                className={`letter-box ${getLetterColor(letter, j)}`}
               >
                 {letter.toUpperCase()}
               </div>
             ))}
           </div>
         ))}
+
         {!gameOver && guesses.length < 6 && (
-          <div className="flex justify-center space-x-1">
+          <div className="word-row">
             {letterInputs.map((letter, index) => (
               <input
                 key={index}
@@ -107,27 +108,20 @@ export default function ConstructionWordle() {
                 ref={(el) => (inputRefs.current[index] = el)}
                 onChange={(e) => handleInputChange(e.target.value, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
-                className="w-10 h-10 text-center text-xl border rounded uppercase"
               />
             ))}
           </div>
         )}
       </div>
-      <button
-        onClick={handleGuess}
-        disabled={gameOver}
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
-      >
+
+      <button onClick={handleGuess} disabled={gameOver}>
         Submit
       </button>
-      {result && (
-        <div className="mt-4 p-4 border rounded bg-white shadow">{result}</div>
-      )}
+
+      {result && <div className="result-box">{result}</div>}
+
       {gameOver && (
-        <button
-          onClick={handleRestart}
-          className="mt-4 px-4 py-2 bg-green-600 text-white rounded"
-        >
+        <button onClick={handleRestart} style={{ marginLeft: "8px" }}>
           Play Again
         </button>
       )}
