@@ -80,6 +80,8 @@ export default function ConstructionWordle() {
     return "bg-gray-300";
   };
 
+  const isLoss = result.toLowerCase().includes("out of attempts");
+
   return (
     <div>
       <h1>Construction Wordle 🏗️</h1>
@@ -119,10 +121,10 @@ export default function ConstructionWordle() {
       </button>
 
       {gameOver && (
-        <div className={`result-box ${result.includes("Out of attempts") ? "loss" : ""}`}>
+        <div className={`result-box ${isLoss ? "loss" : ""}`}>
           <div>{result}</div>
-          {result.includes("Out of attempts") && (
-            <>
+          {isLoss && (
+            <React.Fragment>
               <div className="loss-message">The house always wins — you owe Cori 5 dollars.</div>
               <a
                 href="https://venmo.com/cori-spetnagel"
@@ -132,7 +134,7 @@ export default function ConstructionWordle() {
               >
                 Pay Now
               </a>
-            </>
+            </React.Fragment>
           )}
         </div>
       )}
@@ -144,4 +146,4 @@ export default function ConstructionWordle() {
       )}
     </div>
   );
-}
+} 
