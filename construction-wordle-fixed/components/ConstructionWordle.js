@@ -74,28 +74,54 @@ export default function ConstructionWordle() {
     setGameOver(false);
   };
 
-  const getLetterColor = (letter, index) => {
-    if (letter === targetWord[index]) return "bg-green-400";
-    if (targetWord.includes(letter)) return "bg-yellow-300";
-    return "bg-gray-300";
+  const getLetterColors = (guess, answer) => {
+    const result = Array(5).fill("bg-gray-300");
+    const letterUsed = Array(5).fill(false);
+
+    // First pass: correct position
+    for (let i = 0; i < 5; i++) {
+      if (guess[i] === answer[i]) {
+        result[i] = "bg-green-400";
+        letterUsed[i] = true;
+      }
+    }
+
+    // Second pass: wrong position, only if not already marked
+    for (let i = 0; i < 5; i++) {
+      if (result[i] === "bg-green-400") continue;
+      for (let j = 0; j < 5; j++) {
+        if (!letterUsed[j] && guess[i] === answer[j]) {
+          result[i] = "bg-yellow-300";
+          letterUsed[j] = true;
+          break;
+        }
+      }
+    }
+
+    return result;
   };
+
+  const isLoss = result.toLowerCase().includes("out of attempts");
 
   return (
     <div>
-      <h1>Construction Wordle</h1>
+      <h1>Construction Wordle 🏗️</h1>
       <div className="space-y-2 mt-4">
-        {guesses.map((g, i) => (
-          <div key={i} className="word-row">
-            {g.split("").map((letter, j) => (
-              <div
-                key={j}
-                className={`letter-box ${getLetterColor(letter, j)}`}
-              >
-                {letter.toUpperCase()}
-              </div>
-            ))}
-          </div>
-        ))}
+        {guesses.map((g, i) => {
+          const colors = getLetterColors(g, targetWord);
+          return (
+            <div key={i} className="word-row">
+              {g.split("").map((letter, j) => (
+                <div
+                  key={j}
+                  className={`letter-box ${colors[j]}`}
+                >
+                  {letter.toUpperCase()}
+                </div>
+              ))}
+            </div>
+          );
+        })}
 
         {!gameOver && guesses.length < 6 && (
           <div className="word-row">
@@ -119,13 +145,13 @@ export default function ConstructionWordle() {
       </button>
 
       {gameOver && (
-        <div className={`result-box ${result.includes("Out of attempts") ? "loss" : ""}`}>
+        <div className={`result-box ${isLoss ? "loss" : ""}`}>
           <div>{result}</div>
-          {result.includes("Out of attempts") && (
+          {isLoss && (
             <>
               <div className="loss-message">The house always wins — you owe Cori 5 dollars.</div>
               <a
-                href="https://venmo.com/cori-spetnagel?txn=pay&amount=5&note=best%2520intern%2520ever%2520:)"
+                href="https://venmo.com/cori-spetnagel?note=Best%2520Intern%2520Ever"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="venmo-button"
