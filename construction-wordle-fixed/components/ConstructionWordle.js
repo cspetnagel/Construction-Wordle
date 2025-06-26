@@ -105,7 +105,7 @@ export default function ConstructionWordle() {
 
   return (
     <div>
-      <h1>Construction Wordle 🏗️</h1>
+      <h1>Construction Wordle</h1>
       <div className="space-y-2 mt-4">
         {guesses.map((g, i) => {
           const colors = getLetterColors(g, targetWord);
