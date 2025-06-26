@@ -40,6 +40,17 @@ button {
   font-size: 1rem;
 }
 
+button.venmo-button {
+  margin-top: 1rem;
+  background: #3d95ce;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-radius: 6px;
+  color: white;
+  display: inline-block;
+}
+
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -87,4 +98,33 @@ button:disabled {
   border-radius: 10px;
   font-size: 1.2rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.result-box::after {
+  content: "\A\AThe house always wins — you owe Cori 5 dollars.";
+  white-space: pre-wrap;
+  display: block;
+  font-size: 1rem;
+  color: #555;
+  margin-top: 1rem;
+}
+
+.result-box::before {
+  content: "";
+  display: block;
+  margin-top: 1rem;
+}
+
+.result-box::after {
+  content: "\A\AThe house always wins — you owe Cori 5 dollars.";
+  white-space: pre-wrap;
+  display: block;
+  font-size: 1rem;
+  color: #555;
+  margin-top: 1rem;
+}
+
+.result-box + .venmo-link {
+  margin-top: 0.5rem;
+  display: block;
 }
