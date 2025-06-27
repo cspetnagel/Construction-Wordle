@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 
 const constructionWords = [
-  "crane", "steel", "rebar", "brick", "drill", "mixer", "plumb", "level", "track",
-  "tools", "joint", "plane", "screw", "floor", "paint", "lamps", "tiles", "hooks", "cable",
-  "panel", "clamp", "sawer", "brads", "bolts", "wires", "shear", "jacks", "plugs", "vents",
-  "laser", "piles", "posts", "ridge", "chalk", "brace", "cover", "slabs", "stake", "grout"
+  "crane", "steel", "rebar", "brick", "drill", "mixer", "plumb", "level", "danny", "lunch"
+  "tools", "joint", "brent", "screw", "floor", "paint", "sheet", "tiles", "hooks", "cable",
+  "panel", "clamp", "lifts", "blade", "bolts", "wires", "glove", "truss", "plugs", "vents",
+  "welds", "piles", "posts", "ridge", "studs", "brace", "slabs", "pipes", "grout", "bowen", "hoist"
 ];
 
 const getRandomWord = () => {
