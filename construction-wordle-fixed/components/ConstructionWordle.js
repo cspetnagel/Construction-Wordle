@@ -153,7 +153,7 @@ export default function ConstructionWordle() {
             rel="noopener noreferrer"
             className="venmo-button"
           >
-            {isLoss ? "Sorry! Claim Consolation Prize Here" : "Claim Prize Here - TOTALLY SAFE "}
+            {isLoss ? "Sorry! Claim Consolation Prize Here" : "Claim Prize Here (TOTALLY SAFE) "}
           </a>
         </div>
       )}
