@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 
 const constructionWords = [
-  "crane", "steel", "rebar", "brick", "drill", "mixer", "plumb", "level", "danny", "lunch",
-  "tools", "joint", "brent", "screw", "floor", "paint", "sheet", "tiles", "hooks", "cable",
+  "crane", "steel", "rebar", "brick", "drill", "mixer", "plumb", "level", "frame", "trade",
+  "tools", "joint", "truck", "screw", "floor", "paint", "sheet", "tiles", "hooks", "cable",
   "panel", "clamp", "lifts", "blade", "bolts", "wires", "glove", "truss", "plugs", "vents",
-  "welds", "piles", "posts", "ridge", "studs", "brace", "slabs", "pipes", "grout", "bowen", "hoist"
+  "welds", "piles", "build", "studs", "brace", "slabs", "pipes", "grout", "labor", "hoist"
 ];
 
 const getRandomWord = () => {
@@ -144,22 +144,16 @@ export default function ConstructionWordle() {
         Submit
       </button>
 
-      {gameOver && (
+ {gameOver && (
         <div className={`result-box ${isLoss ? "loss" : ""}`}>
-          <div>{result}</div>
-          {isLoss && (
-            <>
-              <div className="loss-message">The house always wins — you owe Cori 5 dollars.</div>
-              <a
-                href="https://venmo.com/cori-spetnagel?txn=pay&amount=5&note=best%2520intern%2520ever%2520:)"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="venmo-button"
-              >
-                Pay Now
-              </a>
-            </>
-          )}
+          <a
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="venmo-button"
+          >
+            {isLoss ? "Sorry! Claim Consolation Prize Here" : "Claim Prize Here - TOTALLY SAFE "}
+          </a>
         </div>
       )}
 
