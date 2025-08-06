@@ -146,6 +146,7 @@ export default function ConstructionWordle() {
 
  {gameOver && (
         <div className={`result-box ${isLoss ? "loss" : ""}`}>
+          <p>{result}</p>
           <a
             href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             target="_blank"
